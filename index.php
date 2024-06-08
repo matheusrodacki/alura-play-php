@@ -44,7 +44,7 @@ $videoList = $pdo->query('SELECT * FROM videos')->fetchAll(\PDO::FETCH_ASSOC);
                     <img src="./img/logo.png" alt="logo canal alura">
                     <h3><?php echo $video['titulo'] ?></h3>
                     <div class="acoes-video">
-                        <a href="./pages/enviar-video.html">Editar</a>
+                        <a href="/formulario.php?id=<?= $video['id'] ?>">Editar</a>
                         <a href="/deleta-video.php?id=<?= $video['id'] ?>">Excluir</a>
                     </div>
                 </div>
