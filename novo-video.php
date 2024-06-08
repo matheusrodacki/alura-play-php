@@ -9,8 +9,11 @@ if ($url === false) {
   exit();
 }
 
-$titulo =  $_POST['titulo'];
-
+$titulo =  filter_input(INPUT_POST, 'titulo');
+if ($titulo === null || $titulo === false) {
+  header('Location: /index.php?sucesso=0');
+  exit();
+}
 
 $sql =  'INSERT INTO videos (titulo, url) VALUES (?, ?)';
 $stmt = $pdo->prepare($sql);

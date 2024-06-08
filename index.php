@@ -38,19 +38,17 @@ $videoList = $pdo->query('SELECT * FROM videos')->fetchAll(\PDO::FETCH_ASSOC);
 
     <ul class="videos__container" alt="videos alura">
         <?php foreach ($videoList as $video) : ?>
-            <?php if (str_starts_with($video['url'], 'http')) : ?>
-                <li class="videos__item">
-                    <iframe width="100%" height="72%" src=<?php echo $video['url'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <div class="descricao-video">
-                        <img src="./img/logo.png" alt="logo canal alura">
-                        <h3><?php echo $video['titulo'] ?></h3>
-                        <div class="acoes-video">
-                            <a href="./pages/enviar-video.html">Editar</a>
-                            <a href="/deleta-video.php?id=<?= $video['id'] ?>">Excluir</a>
-                        </div>
+            <li class="videos__item">
+                <iframe width="100%" height="72%" src=<?php echo $video['url'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="descricao-video">
+                    <img src="./img/logo.png" alt="logo canal alura">
+                    <h3><?php echo $video['titulo'] ?></h3>
+                    <div class="acoes-video">
+                        <a href="./pages/enviar-video.html">Editar</a>
+                        <a href="/deleta-video.php?id=<?= $video['id'] ?>">Excluir</a>
                     </div>
-                </li>
-            <?php endif; ?>
+                </div>
+            </li>
         <?php endforeach; ?>
     </ul>
 </body>
