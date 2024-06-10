@@ -6,21 +6,21 @@ $pdo = new PDO("sqlite:$dbPath");
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!$id) {
-  header('Location: /index.php?sucesso=0');
+  header('Location: /?sucesso=0');
   exit();
 }
 
 $url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
 
 if (!$url) {
-  header('Location: /index.php?sucesso=0');
+  header('Location: /?sucesso=0');
   exit();
 }
 
 $titulo = filter_input(INPUT_POST, 'titulo');
 
 if (!$titulo) {
-  header('Location: /index.php?sucesso=0');
+  header('Location: /?sucesso=0');
   exit();
 }
 
@@ -31,7 +31,7 @@ $stmt->bindValue(':url', $url);
 $stmt->bindValue(':titulo', $titulo);
 
 if ($stmt->execute()) {
-  header('Location: /index.php?sucesso=1');
+  header('Location: /?sucesso=1');
 } else {
-  header('Location: /index.php?sucesso=0');
+  header('Location: /?sucesso=0');
 }
