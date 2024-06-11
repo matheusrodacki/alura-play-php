@@ -15,12 +15,10 @@ if ($titulo === null || $titulo === false) {
   exit();
 }
 
-$sql =  'INSERT INTO videos (titulo, url) VALUES (?, ?)';
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(1, $titulo);
-$stmt->bindValue(2, $url);
+$repository = new \Alura\MVC\Repository\VideoRepository($pdo);
+$result = $repository->add(new \Alura\MVC\Entity\Video($url, $titulo));
 
-if ($stmt->execute()) {
+if ($result) {
   header('Location: /?sucesso=1');
 } else {
   header('Location: /?sucesso=0');
