@@ -13,7 +13,7 @@ if (!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO'] === '/') {
 } elseif ($_SERVER['PATH_INFO'] === '/editar-video') {
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     require_once 'formulario.php';
-  } else {
+  } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'editar-video.php';
   }
 } elseif ($_SERVER['PATH_INFO'] === '/deleta-video') {
