@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use \Alura\MVC\Repository\VideoRepository;
-use \Alura\MVC\Controller\{Controller, VideoListController, VideoFormController};
+use \Alura\MVC\Controller\{Controller, DeleteVideoController, EditVideoController, Error404Controller, NewVideoController, VideoListController, VideoFormController};
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -18,18 +18,18 @@ if (!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO'] === '/') {
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new VideoFormController($videoRepository);
   } else {
-    require_once __DIR__ .  '/../novo-video.php';
+    $controller = new NewVideoController($videoRepository);
   }
 } elseif ($_SERVER['PATH_INFO'] === '/editar-video') {
   if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new VideoFormController($videoRepository);
   } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__ .  '/../editar-video.php';
+    $controller = new EditVideoController($videoRepository);
   }
 } elseif ($_SERVER['PATH_INFO'] === '/deleta-video') {
-  require_once __DIR__ .  '/../deleta-video.php';
+  $controller = new DeleteVideoController($videoRepository);
 } else {
-  http_response_code(404);
+  $controller = new Error404Controller();
 }
 /** @var Controller $controller */
 $controller->processaRequisicao();
