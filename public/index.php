@@ -3,7 +3,15 @@
 declare(strict_types=1);
 
 use \Alura\MVC\Repository\VideoRepository;
-use \Alura\MVC\Controller\{Controller, DeleteVideoController, EditVideoController, Error404Controller, NewVideoController, VideoListController, VideoFormController};
+use \Alura\MVC\Controller\{
+  Controller,
+  DeleteVideoController,
+  EditVideoController,
+  Error404Controller,
+  NewVideoController,
+  VideoListController,
+  VideoFormController
+};
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
