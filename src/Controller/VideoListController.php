@@ -16,6 +16,6 @@ class VideoListController
   public function processaRequisicao(): void
   {
     $videoList = $this->videoRepository->all();
-    require __DIR__ . '/../../Views/video-list.php';
+    require __DIR__ . '/../../views/video-list.php';
   }
 }

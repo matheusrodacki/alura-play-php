@@ -22,6 +22,6 @@ class VideoFormController implements Controller
       $video = $this->videoRepository->find($id);
     }
 
-    require __DIR__ . '/../../Views/video-form.php';
+    require __DIR__ . '/../../views/video-form.php';
   }
 }
