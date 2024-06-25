@@ -14,10 +14,10 @@ class UserRepository
 
   public function add(User $user): bool
   {
-    $sql = 'INSERT INTO users (password, email) VALUES (?, ?)';
+    $sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
     $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(1, $user->password);
-    $stmt->bindValue(2, $user->email);
+    $stmt->bindValue(1, $user->email);
+    $stmt->bindValue(2, $user->password);
     $result = $stmt->execute();
 
     $id = $this->pdo->lastInsertId();
@@ -46,7 +46,6 @@ class UserRepository
 
   public function all(): array
   {
-
     $userList = $this->pdo->query('SELECT * FROM users')->fetchAll();
 
     return array_map(
@@ -55,7 +54,7 @@ class UserRepository
     );
   }
 
-  public function find(int $id): User
+  public function findById(int $id): User
   {
     $stmt = $this->pdo->prepare('SELECT * FROM users WHERE id = ?');
     $stmt->bindValue(1, $id, \PDO::PARAM_INT);
@@ -63,9 +62,17 @@ class UserRepository
     return $this->hydrateUser($stmt->fetch(\PDO::FETCH_ASSOC));
   }
 
+  public function findByEmail(string $email): User
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
+    $stmt->bindValue(1, $email, \PDO::PARAM_STR);
+    $stmt->execute();
+    return $this->hydrateUser($stmt->fetch(\PDO::FETCH_ASSOC));
+  }
+
   private function hydrateUser(array $userData): User
   {
-    $user = new User($userData['password'], $userData['email']);
+    $user = new User($userData['email'], $userData['password'],);
     return $user;
   }
 }

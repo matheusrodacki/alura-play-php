@@ -10,4 +10,5 @@ return [
   'POST|/editar-video' => \Alura\MVC\Controller\EditVideoController::class,
   'GET|/remover-video' => \Alura\MVC\Controller\DeleteVideoController::class,
   'GET|/login' => \Alura\MVC\Controller\LoginFormController::class,
+  'POST|/login' => \Alura\MVC\Controller\LoginController::class,
 ];
