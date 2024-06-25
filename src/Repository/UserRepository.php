@@ -21,6 +21,7 @@ class UserRepository
     $result = $stmt->execute();
 
     $id = $this->pdo->lastInsertId();
+    $user->setId(intval($id));
 
     return $result;
   }
@@ -73,6 +74,7 @@ class UserRepository
   private function hydrateUser(array $userData): User
   {
     $user = new User($userData['email'], $userData['password'],);
+    $user->setId($userData['id']);
     return $user;
   }
 }
