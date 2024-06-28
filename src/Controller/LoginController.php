@@ -26,7 +26,9 @@ class LoginController implements Controller
     $user = $videoRepository->findByEmail($email);
     $correctPassword = password_verify($password, $user->password);
 
+
     if ($correctPassword) {
+      $_SESSION['logado'] = true;
       header('Location: /');
       return;
     } else {
