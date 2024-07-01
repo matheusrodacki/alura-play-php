@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 
+use Alura\MVC\Infrastructure\ConnectionPDO;
 use Alura\MVC\Repository\UserRepository;
 use PDO;
 
@@ -13,8 +14,8 @@ class LoginController implements Controller
 
   public function __construct()
   {
-    $dbPath = __DIR__ . '/../../banco.sqlite';
-    $this->pdo = new PDO("sqlite:$dbPath");
+    $connection = new ConnectionPDO();
+    $this->pdo = $connection->getPdo();
   }
 
   public function processaRequisicao(): void
@@ -26,6 +27,11 @@ class LoginController implements Controller
     $user = $videoRepository->findByEmail($email);
     $correctPassword = password_verify($password, $user->password);
 
+    if (password_needs_rehash($user->password, PASSWORD_ARGON2ID)) {
+      $newHashedPassword = password_hash($password, PASSWORD_ARGON2ID);
+      $userRepository = new UserRepository($this->pdo);
+      $userRepository->updatePassword($user->id, $newHashedPassword);
+    }
 
     if ($correctPassword) {
       $_SESSION['logado'] = true;
