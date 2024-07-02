@@ -12,8 +12,72 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="$PROJECT_DIR$/public" />
       <path value="$PROJECT_DIR$/vendor/composer" />
     </include_path>
+  </component>
+  <component name="PhpInterpreters">
+    <interpreters>
+      <interpreter id="dd1e6dc3-0c6d-4284-a55c-fc272449f38c" name="Arch" home="\\wsl$\Arch/usr/bin/php" auto="false" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DISTRIBUTION_ID="Arch" />
+      </interpreter>
+    </interpreters>
+  </component>
+  <component name="PhpInterpretersPhpInfoCache">
+    <phpInfoCache>
+      <interpreter name="Arch">
+        <phpinfo binary_type="PHP" php_cli="/usr/bin/php" path_separator=":" remote_host="10.255.255.254" version="8.3.8">
+          <additional_php_ini>/etc/php/conf.d/xdebug.ini</additional_php_ini>
+          <configuration_file>/etc/php/php.ini</configuration_file>
+          <configuration_options>
+            <configuration_option name="include_path" value=".:" />
+          </configuration_options>
+          <debuggers>
+            <debugger_info debugger="xdebug" debugger_version="3.3.2">
+              <debug_extensions />
+            </debugger_info>
+          </debuggers>
+          <loaded_extensions>
+            <extension name="Core" />
+            <extension name="PDO" />
+            <extension name="Phar" />
+            <extension name="Reflection" />
+            <extension name="SPL" />
+            <extension name="SimpleXML" />
+            <extension name="ctype" />
+            <extension name="curl" />
+            <extension name="date" />
+            <extension name="dom" />
+            <extension name="fileinfo" />
+            <extension name="filter" />
+            <extension name="hash" />
+            <extension name="json" />
+            <extension name="libxml" />
+            <extension name="mbstring" />
+            <extension name="mysqli" />
+            <extension name="mysqlnd" />
+            <extension name="openssl" />
+            <extension name="pcntl" />
+            <extension name="pcre" />
+            <extension name="pdo_mysql" />
+            <extension name="pdo_sqlite" />
+            <extension name="posix" />
+            <extension name="random" />
+            <extension name="readline" />
+            <extension name="session" />
+            <extension name="sqlite3" />
+            <extension name="standard" />
+            <extension name="tokenizer" />
+            <extension name="xdebug" />
+            <extension name="xml" />
+            <extension name="xmlreader" />
+            <extension name="xmlwriter" />
+            <extension name="zip" />
+            <extension name="zlib" />
+          </loaded_extensions>
+        </phpinfo>
+      </interpreter>
+    </phpInfoCache>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />

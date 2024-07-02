@@ -34,14 +34,12 @@ class NewVideoController implements Controller
       $finfo = new \finfo(FILEINFO_MIME_TYPE);
       $mimeType = $finfo->file($_FILES['image']['tmp_name']);
       if (str_starts_with($mimeType, 'image/')) {
-        header('Location: /?sucesso=0');
-        return;
+        move_uploaded_file(
+          $_FILES['image']['tmp_name'],
+          __DIR__ . '/../../public/uploads/' . $safeFileName
+        );
+        $video->setImagePath($safeFileName);
       }
-      move_uploaded_file(
-        $_FILES['image']['tmp_name'],
-        __DIR__ . '/../../public/uploads/' . $safeFileName
-      );
-      $video->setImagePath($safeFileName);
     }
 
     $success = $this->videoRepository->add($video);
