@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 
+use Alura\MVC\Helper\HtmlRenderTrait;
 use Alura\MVC\Repository\VideoRepository;
 
-class VideoFormController extends HTMLController implements Controller
+class VideoFormController implements Controller
 {
 
   public function __construct(private VideoRepository $videoRepository)
   {
   }
+
+  use HtmlRenderTrait;
 
   public function processaRequisicao(): void
   {
@@ -21,6 +24,6 @@ class VideoFormController extends HTMLController implements Controller
     if ($id) {
       $video = $this->videoRepository->find($id);
     }
-    $this->renderTemplate('video-form', ['video' => $video]);
+    echo $this->renderTemplate('video-form', ['video' => $video]);
   }
 }
