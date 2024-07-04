@@ -7,7 +7,10 @@ namespace Alura\MVC\Controller;
 use Alura\MVC\Helper\FlashMessageTrait;
 use Alura\MVC\Infrastructure\ConnectionPDO;
 use Alura\MVC\Repository\UserRepository;
+use Nyholm\Psr7\Response;
 use PDO;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class LoginController implements Controller
 {
@@ -21,21 +24,25 @@ class LoginController implements Controller
     $this->pdo = $connection->getPdo();
   }
 
-  public function processaRequisicao(): void
+  public function processaRequisicao(ServerRequestInterface $request): ResponseInterface
   {
+    $queryParams = $request->getQueryParams();
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password');
-
     $videoRepository = new UserRepository($this->pdo);
     $user = $videoRepository->findByEmail($email);
 
     if (!$user) {
       $this->addErrorMessage('Usuário ou senha inválidos');
-      header('Location: /login');
-      return;
+      return new Response(302, ['Location' => '/login']);
     }
 
     $correctPassword = password_verify($password, $user->password);
+
+    if (!$correctPassword) {
+      $this->addErrorMessage('Usuário ou senha inválidos');
+      return new Response(302, ['Location' => '/login']);
+    }
 
     if (password_needs_rehash($user->password, PASSWORD_ARGON2ID)) {
       $newHashedPassword = password_hash($password, PASSWORD_ARGON2ID);
@@ -43,13 +50,8 @@ class LoginController implements Controller
       $userRepository->updatePassword($user->id, $newHashedPassword);
     }
 
-    if ($correctPassword) {
-      $_SESSION['logado'] = true;
-      header('Location: /');
-      return;
-    } else {
-      $this->addErrorMessage('Usuário ou senha inválidos');
-      header('Location: /login');
-    }
+    $_SESSION['logado'] = true;
+    return new Response(200, ['Location' => '/']);
+
   }
 }

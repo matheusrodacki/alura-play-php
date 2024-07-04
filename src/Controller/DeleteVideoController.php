@@ -29,7 +29,7 @@ class DeleteVideoController implements Controller
 
     $success = $this->videoRepository->remove($id);
     if ($success === false) {
-      $this->addErrorMessage('}Erro ao remover vídeo');
+      $this->addErrorMessage('Erro ao remover vídeo');
       return new Response(302, ['Location' => '/']);
     } else {
       return new Response(302, ['Location' => '/']);
