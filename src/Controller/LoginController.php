@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 
+use Alura\MVC\Helper\FlashMessageTrait;
 use Alura\MVC\Infrastructure\ConnectionPDO;
 use Alura\MVC\Repository\UserRepository;
 use PDO;
@@ -11,6 +12,8 @@ use PDO;
 class LoginController implements Controller
 {
   private PDO $pdo;
+
+  use FlashMessageTrait;
 
   public function __construct()
   {
@@ -25,6 +28,13 @@ class LoginController implements Controller
 
     $videoRepository = new UserRepository($this->pdo);
     $user = $videoRepository->findByEmail($email);
+
+    if (!$user) {
+      $this->addErrorMessage('Usuário ou senha inválidos');
+      header('Location: /login');
+      return;
+    }
+
     $correctPassword = password_verify($password, $user->password);
 
     if (password_needs_rehash($user->password, PASSWORD_ARGON2ID)) {
@@ -38,7 +48,8 @@ class LoginController implements Controller
       header('Location: /');
       return;
     } else {
-      header('Location: /login?success=0');
+      $this->addErrorMessage('Usuário ou senha inválidos');
+      header('Location: /login');
     }
   }
 }

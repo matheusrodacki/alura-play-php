@@ -74,12 +74,18 @@ class UserRepository
     return $this->hydrateUser($stmt->fetch(\PDO::FETCH_ASSOC));
   }
 
-  public function findByEmail(string $email): User
+  public function findByEmail(string $email): ?User
   {
     $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
     $stmt->bindValue(1, $email, \PDO::PARAM_STR);
     $stmt->execute();
-    return $this->hydrateUser($stmt->fetch(\PDO::FETCH_ASSOC));
+    $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    if ($result) {
+      return $this->hydrateUser($result);
+    } else {
+      return null;
+    }
   }
 
   private function hydrateUser(array $userData): User
