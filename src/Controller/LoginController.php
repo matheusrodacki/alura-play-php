@@ -11,8 +11,9 @@ use Nyholm\Psr7\Response;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class LoginController implements Controller
+class LoginController implements RequestHandlerInterface
 {
   private PDO $pdo;
 
@@ -24,12 +25,24 @@ class LoginController implements Controller
     $this->pdo = $connection->getPdo();
   }
 
-  public function processaRequisicao(ServerRequestInterface $request): ResponseInterface
+  public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $queryParams = $request->getQueryParams();
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    if ($email === false) {
+      $this->addErrorMessage('E-mail ou senha inválido');
+      return new Response(302, ['Location' => '/login']);
+    }
+
     $password = filter_input(INPUT_POST, 'password');
+    if ($password === false) {
+      $this->addErrorMessage('E-mail ou senha inválido');
+      return new Response(302, ['Location' => '/login']);
+    }
+
+
     $videoRepository = new UserRepository($this->pdo);
+
+
     $user = $videoRepository->findByEmail($email);
 
     if (!$user) {

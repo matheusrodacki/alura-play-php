@@ -3,15 +3,8 @@
 declare(strict_types=1);
 
 use \Alura\MVC\Repository\VideoRepository;
-use \Alura\MVC\Controller\{
-  Controller,
-  DeleteVideoController,
-  EditVideoController,
-  Error404Controller,
-  NewVideoController,
-  VideoListController,
-  VideoFormController
-};
+use \Alura\MVC\Controller\Error404Controller;
+use Psr\Http\Server\RequestHandlerInterface;
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -52,8 +45,8 @@ $creator = new \Nyholm\Psr7Server\ServerRequestCreator(
 
 $serverRequest = $creator->fromGlobals();
 
-/** @var Controller $controller */
-$response = $controller->processaRequisicao($serverRequest);
+/** @var RequestHandlerInterface $controller */
+$response = $controller->handle($serverRequest);
 
 http_response_code($response->getStatusCode());
 foreach ($response->getHeaders() as $name => $values) {
