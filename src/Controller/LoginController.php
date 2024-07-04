@@ -15,15 +15,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LoginController implements RequestHandlerInterface
 {
-  private PDO $pdo;
+
 
   use FlashMessageTrait;
 
-  public function __construct()
+  public function __construct(private UserRepository $userRepository)
   {
-    $connection = new ConnectionPDO();
-    $this->pdo = $connection->getPdo();
   }
+
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
@@ -39,11 +38,7 @@ class LoginController implements RequestHandlerInterface
       return new Response(302, ['Location' => '/login']);
     }
 
-
-    $videoRepository = new UserRepository($this->pdo);
-
-
-    $user = $videoRepository->findByEmail($email);
+    $user = $this->userRepository->findByEmail($email);
 
     if (!$user) {
       $this->addErrorMessage('Usuário ou senha inválidos');
