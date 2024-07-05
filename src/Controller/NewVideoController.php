@@ -23,7 +23,7 @@ class NewVideoController implements RequestHandlerInterface
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $queryParams = $request->getQueryParams();
+    $queryParams = $request->getParsedBody();
     $url = filter_var($queryParams['url'], FILTER_VALIDATE_URL);
     if ($url === false) {
       $this->addErrorMessage('URL Inválida');

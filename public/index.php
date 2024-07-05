@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use \Alura\MVC\Repository\VideoRepository;
 use \Alura\MVC\Controller\Error404Controller;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -22,6 +21,7 @@ session_regenerate_id();
 $isLoginRoute = $pathInfo === '/login';
 if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute) {
   header('Location: /login');
+  return;
 }
 
 $key = "$httpMethod|$pathInfo";
@@ -41,10 +41,10 @@ $creator = new \Nyholm\Psr7Server\ServerRequestCreator(
   $psr17Factory  // StreamFactory
 );
 
-$serverRequest = $creator->fromGlobals();
+$request = $creator->fromGlobals();
 
 /** @var RequestHandlerInterface $controller */
-$response = $controller->handle($serverRequest);
+$response = $controller->handle($request);
 
 http_response_code($response->getStatusCode());
 foreach ($response->getHeaders() as $name => $values) {

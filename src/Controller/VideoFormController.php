@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 
+use Alura\MVC\Entity\Video;
 use Alura\MVC\Helper\FlashMessageTrait;
 use Alura\MVC\Helper\HtmlRenderTrait;
 use Alura\MVC\Repository\VideoRepository;
@@ -27,11 +28,7 @@ class VideoFormController implements RequestHandlerInterface
     $queryParams = $request->getQueryParams();
     $id = filter_var($queryParams['id'], FILTER_VALIDATE_INT);
 
-    if ($id === null || $id === false) {
-      $this->addErrorMessage('Id Inválido');
-      return new Response(302, ['Location' => '/']);
-    }
-
+    /** @var ?Video $video */
     $video = null;
 
     if ($id) {

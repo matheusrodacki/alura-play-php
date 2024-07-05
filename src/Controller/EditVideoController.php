@@ -30,19 +30,22 @@ class EditVideoController implements RequestHandlerInterface
       return new Response(302, ['Location' => '/']);
     }
 
-    $url = filter_var($queryParams['url'], FILTER_VALIDATE_URL);
+    $bodyParams = $request->getParsedBody();
+
+    $url = filter_var($bodyParams['url'], FILTER_VALIDATE_URL);
     if ($url === false) {
       $this->addErrorMessage('URL Inválida');
       return new Response(302, ['Location' => '/']);
     }
 
-    $titulo = filter_var($queryParams['titulo']);
+    $titulo = filter_var($bodyParams['titulo']);
     if ($titulo === false) {
       $this->addErrorMessage('Título Inválido');
       return new Response(302, ['Location' => '/']);
     }
 
     $video = new Video($url, $titulo);
+
     $files = $request->getUploadedFiles();
     /** @var UploadedFileInterface $uploadedImage */
     $uploadedImage = $files['image'];

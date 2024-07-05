@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Alura\MVC\Controller;
 
 use Alura\MVC\Helper\FlashMessageTrait;
-use Alura\MVC\Infrastructure\ConnectionPDO;
 use Alura\MVC\Repository\UserRepository;
 use Nyholm\Psr7\Response;
-use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -19,6 +17,8 @@ class LoginController implements RequestHandlerInterface
 
   use FlashMessageTrait;
 
+  private \PDO $pdo;
+
   public function __construct(private UserRepository $userRepository)
   {
   }
@@ -26,13 +26,14 @@ class LoginController implements RequestHandlerInterface
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $queryParams = $request->getParsedBody();
+    $email = filter_var($queryParams['email'], FILTER_VALIDATE_EMAIL);
     if ($email === false) {
       $this->addErrorMessage('E-mail ou senha inválido');
       return new Response(302, ['Location' => '/login']);
     }
 
-    $password = filter_input(INPUT_POST, 'password');
+    $password = filter_var($queryParams['password']);
     if ($password === false) {
       $this->addErrorMessage('E-mail ou senha inválido');
       return new Response(302, ['Location' => '/login']);
@@ -52,6 +53,7 @@ class LoginController implements RequestHandlerInterface
       return new Response(302, ['Location' => '/login']);
     }
 
+
     if (password_needs_rehash($user->password, PASSWORD_ARGON2ID)) {
       $newHashedPassword = password_hash($password, PASSWORD_ARGON2ID);
       $userRepository = new UserRepository($this->pdo);
@@ -60,6 +62,5 @@ class LoginController implements RequestHandlerInterface
 
     $_SESSION['logado'] = true;
     return new Response(200, ['Location' => '/']);
-
   }
 }
