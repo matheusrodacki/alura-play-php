@@ -1,6 +1,5 @@
 <?php
-$this->insert('head');
-$this->insert('cabecalho'); ?>
+$this->layout('layout'); ?>
 
 <main class="container">
   <form class="container__formulario" method="post">
@@ -17,4 +16,4 @@ $this->insert('cabecalho'); ?>
   </form>
 </main>
 
-<?php $this->insert('footer');
+<?php

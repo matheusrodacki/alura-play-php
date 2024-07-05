@@ -1,9 +1,6 @@
 <?php
-$this->insert('head');
-$this->insert('cabecalho');
-
+$this->layout('layout');
 /** @var \Alura\MVC\Entity\Video[] $videoList */ ?>
-
 ?>
 <ul class="videos__container" alt="videos alura">
   <?php foreach ($videoList as $video) : ?>
@@ -27,5 +24,4 @@ $this->insert('cabecalho');
     </li>
   <?php endforeach; ?>
 </ul>
-
-<?php $this->insert('footer');
+<?php

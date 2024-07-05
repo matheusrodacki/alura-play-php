@@ -1,6 +1,5 @@
 <?php
-$this->insert('head');
-$this->insert('cabecalho');
+$this->layout('layout');
 /** @var \Alura\MVC\Entity\Video $video */
 ?>
 
@@ -25,4 +24,5 @@ $this->insert('cabecalho');
     <input class="formulario__botao" type="submit" value="Enviar" />
   </form>
 </main>
-<?php $this->insert('footer');
+
+<?php
